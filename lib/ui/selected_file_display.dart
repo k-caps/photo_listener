@@ -1,13 +1,10 @@
 //import 'dart:io';
-import 'dart:io';
 
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../logic/app_state.dart';
 import '../logic/manage_files.dart';
-
 import 'dart:developer';
-import 'package:path/path.dart' as p;
 
 class SelectedFileDisplay extends StatelessWidget {
   const SelectedFileDisplay({
@@ -49,18 +46,9 @@ class ManageFiles extends StatelessWidget {
     
     var appState = context.watch<AppState>();
     var pickedFolder = appState.folderName;
-    log("$pickedFolder");
-    //var fileList = listFilesInFolder(pickedFolder.toString());
-    // Fetch files, excluding directories like .thumbnails
-    var fileList = pickedFolder != null
-      ? Directory('/storage/emulated/0/Pictures/')
-          .listSync()
-          .where((file) => FileSystemEntity.isFileSync(file.path)) // Filter only files
-          .map((file) => p.basename(file.path)) // Extract filenames
-          .toList()
-      : [];
+    log("Picked folder: $pickedFolder");
+    var fileList = listFilesInFolder(pickedFolder!);
 
-    // Debugging: Print the fileList to check if it's empty
     log("File List: $fileList");
   
     return Column(
@@ -70,9 +58,9 @@ class ManageFiles extends StatelessWidget {
           child: ListView.builder(
             itemCount: fileList.length,
             itemBuilder: (context, index) {
+              String fileName = getBasename(fileList[index]);
               return ListTile(
-                //title: Text(fileList[index]),
-                title: Text('hihihihihihih'),
+                title: Text(fileName),
               );
             },
           ),

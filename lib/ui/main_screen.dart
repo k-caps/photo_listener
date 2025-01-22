@@ -1,8 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:provider/provider.dart';
 import '../logic/app_state.dart';
-import '../logic/manage_files.dart';
-import '../logic/permissions.dart'; // Import the permissions logic
+import '../logic/permissions.dart'; // Import the permissions handler
 import 'selected_file_display.dart';
 
 class MainScreen extends StatefulWidget {
@@ -16,7 +15,7 @@ class _MainScreenState extends State<MainScreen> {
   @override
   void initState() {
     super.initState();
-    requestPermissions(context); // Request permissions
+    PermissionsHandler.requestPermissions(context); // Request permissions
   }
 
   @override
@@ -26,22 +25,22 @@ class _MainScreenState extends State<MainScreen> {
 
     return Scaffold(
       appBar: AppBar(
-        title: Text('Main Screen'),
+        title: const Text('Main Screen'),
       ),
       body: Center(
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
             SelectedFileDisplay(folderName: pickedFolder),
-            SizedBox(height: 10),
+            const SizedBox(height: 10),
             ElevatedButton(
               onPressed: () {
                 appState.getFolder();
               },
-              child: Text('Pick a folder to watch'),
+              child: const Text('Pick a folder to watch'),
             ),
-            SizedBox(height: 10),
-            Expanded(
+            const SizedBox(height: 10),
+            const Expanded(
               child: ManageFiles(),
             ),
           ],
